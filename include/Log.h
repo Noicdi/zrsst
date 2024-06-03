@@ -1,6 +1,8 @@
 #ifndef LOG_H
 #define LOG_H
 
+#include <sstream>
+
 #include "LogManager.h"
 
 // public log interface
@@ -176,4 +178,4 @@ static void log(LogManager::logLevel level, const char* format, T value, Targs..
     LogManager::getInstance()->writeLog(stream.str(), level);
 }
 
-#endif //LOG_H
+#endif // LOG_H

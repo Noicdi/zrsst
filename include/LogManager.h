@@ -36,7 +36,7 @@ public:
     void setLogLevel(logLevel log_level);
 
 private:
-    explicit LogManager(logLevel log_level = INFO);
+    explicit LogManager();
 
     ~LogManager();
 
@@ -52,7 +52,9 @@ private:
 
     void switchCurrentBuffer();
 
-    static t_log_level_string logLevelToString(LogManager::logLevel log_level = INFO);
+    static t_log_level_string logLevelToString(logLevel log_level);
+
+    static logLevel stringToLogLevel(const t_log_level_string& log_level);
 
 private:
     bool                    is_run_;

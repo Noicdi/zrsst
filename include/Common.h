@@ -14,8 +14,13 @@ std::string getCurrentDate();
 // return: 00:00:00
 std::string getCurrentTime();
 
-// return: current process name
 std::string getCurrentProcessName();
+
+void stringTrim(std::string&);
+
+void stringToLower(std::string&);
+
+void stringToUpper(std::string&);
 } // namespace common
 
 #endif // ZRSST_INCLUDE_COMMON_H_

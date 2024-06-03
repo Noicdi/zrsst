@@ -1,6 +1,9 @@
 #include "LogFile.h"
+#include "ConfFile.h"
 
 static constexpr std::uintmax_t MAX_LOG_FILE_SIZE = 2.0 * 1024 * 1024 * 1024;
+
+extern std::string LOG_FILE_PATH;
 
 LogFile*       LogFile::m_log_file_ = nullptr;
 std::once_flag LogFile::once_flag_;
@@ -35,11 +38,13 @@ bool LogFile::writeLog(const Buffer& logs)
 
 LogFile::LogFile()
     : today_log_file_count_{0},
-      current_date_{std::move(common::getCurrentDate())},
-      log_directory_{"."},
-      log_path_{getLogFileName(log_directory_, current_date_, today_log_file_count_)},
-      log_file_{std::move(getLogFile(log_path_))}
-{}
+      current_date_{std::move(common::getCurrentDate())}
+{
+    ConfFile conf_file(LOG_FILE_PATH);
+    log_directory_ = std::filesystem::current_path().append(conf_file.getParameterString("log", "directory", "../log"));
+    log_path_      = getLogFileName();
+    log_file_      = getLogFile(log_path_);
+}
 
 LogFile::~LogFile()
 {
@@ -68,7 +73,8 @@ void LogFile::createNewLogFile()
     t_log_path old_log_file_name;
     do
     {
-        old_log_file_name = getLogFileName(log_directory_, current_date_, ++today_log_file_count_);
+        ++today_log_file_count_;
+        old_log_file_name = getLogFileName(false);
     } while (exists(old_log_file_name));
     log_file_.close();
     fs::rename(log_path_, old_log_file_name);
@@ -79,7 +85,27 @@ void LogFile::createNewLogFile()
         current_date_         = common::getCurrentDate();
     }
     // The log file count of the newest log file is always 0
-    log_file_ = std::move(getLogFile(getLogFileName(log_directory_, current_date_, 0)));
+    log_file_ = std::move(getLogFile(getLogFileName()));
+}
+
+std::string LogFile::getLogFileName(const bool is_newest) const
+{
+    if (!exists(log_directory_))
+    {
+        create_directories(log_directory_);
+    }
+
+    std::string log_file_name;
+    if (is_newest)
+    {
+        log_file_name = getLogFileName(log_directory_, current_date_, 0);
+    }
+    else
+    {
+        log_file_name = getLogFileName(log_directory_, current_date_, today_log_file_count_);
+    }
+
+    return log_file_name;
 }
 
 LogFile::t_log_file LogFile::getLogFile(const t_log_path& log_path)
@@ -96,8 +122,7 @@ LogFile::t_log_file LogFile::getLogFile(const t_log_path& log_path)
 
 std::string LogFile::getLogFileName(const std::string& log_directory,
                                     const std::string& current_date,
-                                    const std::size_t  today_log_file_count
-)
+                                    const std::size_t  today_log_file_count)
 {
     // ./test_20240401_0.log
     return log_directory + "/" + common::getCurrentProcessName() + "_" + current_date + "_" +

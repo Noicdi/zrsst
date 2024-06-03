@@ -1,7 +1,9 @@
+#include <algorithm>
 #include <chrono>
 #include <filesystem>
 
 #include "Common.h"
+
 
 namespace common
 {
@@ -35,5 +37,26 @@ std::string getCurrentProcessName()
     static const std::filesystem::path exe_path = std::filesystem::read_symlink("/proc/self/exe");
 
     return exe_path.filename().string();
+}
+
+void stringTrim(std::string& str)
+{
+    if (str.empty())
+    {
+        return;
+    }
+
+    str.erase(0, str.find_first_not_of(" \t\n\r"));
+    str.erase(str.find_last_not_of(" \t\n\r") + 1);
+}
+
+void stringToLower(std::string& str)
+{
+    std::transform(str.cbegin(), str.cend(), str.begin(), [](const unsigned char c) { return std::tolower(c); });
+}
+
+void stringToUpper(std::string& str)
+{
+    std::transform(str.cbegin(), str.cend(), str.begin(), [](const unsigned char c) { return std::toupper(c); });
 }
 } // namespace common
