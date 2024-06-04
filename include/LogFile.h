@@ -46,12 +46,12 @@ private:
 
     void createNewLogFile();
 
+    std::string getLogFileName(bool is_newest = true) const;
+
     static t_log_file getLogFile(const t_log_path& log_path);
 
-    static std::string getLogFileName(const std::string& log_directory,
-                                      const std::string& current_date,
-                                      std::size_t        today_log_file_count
-    );
+    static std::string
+    getLogFileName(const std::string& log_directory, const std::string& current_date, std::size_t today_log_file_count);
 
 private:
     static LogFile*       m_log_file_;

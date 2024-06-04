@@ -3,6 +3,7 @@ add_executable(test-log
         ../src/Buffer.cpp
         ../src/LogFile.cpp
         ../src/LogManager.cpp
+        ../src/ConfFile.cpp
         TestLog.cpp
 )
 

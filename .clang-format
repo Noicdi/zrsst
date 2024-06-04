@@ -6,14 +6,15 @@ AlignConsecutiveAssignments: true
 AlignConsecutiveDeclarations: true
 AlignOperands: true
 AlignTrailingComments: true
-AllowShortBlocksOnASingleLine: false
+AllowShortBlocksOnASingleLine: Never
 AllowShortFunctionsOnASingleLine: None
 AllowShortIfStatementsOnASingleLine: false
-AlwaysBreakAfterDefinitionReturnType: false
+#AlwaysBreakAfterDefinitionReturnType: false
+AllowAllParametersOfDeclarationOnNextLine: false
 AlwaysBreakTemplateDeclarations: Yes
 BinPackArguments: false
 BinPackParameters: false
-BraceWrapping: 
+BraceWrapping:
   AfterCaseLabel: true
   AfterClass: true
   AfterControlStatement: true
@@ -33,9 +34,12 @@ BraceWrapping:
   SplitEmptyNamespace: false
 BreakBeforeBraces: Custom
 BreakConstructorInitializersBeforeComma: false
+BreakConstructorInitializers: BeforeColon
+BreakInheritanceList: BeforeColon
+PackConstructorInitializers: Never
 ColumnLimit: 120
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
-IncludeCategories: 
+IncludeCategories:
   - Regex: '^<.*'
     Priority: 1
   - Regex: '^".*'
@@ -56,4 +60,5 @@ SpacesInConditionalStatement: false
 SpacesInCStyleCastParentheses: false
 SpacesInParentheses: false
 TabWidth: 4
+PointerAlignment: Left
 ...
