@@ -29,6 +29,7 @@ void ConfFile::readParameter()
 
     for (std::string line; std::getline(conf_file_, line);)
     {
+        eraseComment(line);
         common::stringTrim(line);
         if (line.empty() || isComment(line))
         {
@@ -60,16 +61,6 @@ void ConfFile::readParameter()
             section_iter->second.emplace(parameter_key, parameter_value);
         }
     }
-}
-
-inline bool ConfFile::isSection(const std::string& str)
-{
-    return str[0] == '[' && str[str.length() - 1] == ']';
-}
-
-inline bool ConfFile::isComment(const std::string& str)
-{
-    return str[0] == '#';
 }
 
 std::string ConfFile::getParameterString(const std::string& section,
@@ -132,4 +123,37 @@ bool ConfFile::getParameterBool(const std::string& section,
     }
 
     return true;
+}
+
+inline bool ConfFile::isSection(const std::string& str)
+{
+    if (str.empty())
+    {
+        return false;
+    }
+
+    return str[0] == '[' && str[str.length() - 1] == ']';
+}
+
+inline bool ConfFile::isComment(const std::string& str)
+{
+    if (str.empty())
+    {
+        return false;
+    }
+
+    return str[0] == '#';
+}
+
+inline void ConfFile::eraseComment(std::string& str)
+{
+    if (str.empty())
+    {
+        return;
+    }
+
+    if (const auto pos = str.find_first_of('#'); pos != std::string::npos)
+    {
+        str.erase(pos);
+    }
 }

@@ -32,10 +32,11 @@ private:
 
     static bool isComment(const std::string& str);
 
+    static void eraseComment(std::string& str);
+
 private:
     t_conf_file         conf_file_;
     t_conf_file_section conf_file_section_;
 };
-
 
 #endif // CONFFILE_H

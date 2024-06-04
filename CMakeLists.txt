@@ -7,6 +7,7 @@ aux_source_directory(${CMAKE_CURRENT_LIST_DIR}/src project_src)
 add_executable(${PROJECT_NAME} ${project_src})
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+file(MAKE_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
