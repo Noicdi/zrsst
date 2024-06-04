@@ -7,11 +7,11 @@
 
 class Buffer
 {
-public:
+  public:
     typedef std::vector<char>   t_buffer;
     typedef t_buffer::size_type t_buffer_size;
 
-public:
+  public:
     explicit Buffer(std::size_t size = DEFAULT_BUFFER_SIZE);
 
     Buffer(const Buffer& rhs);
@@ -42,7 +42,7 @@ public:
 
     [[nodiscard]] bool canWrite(std::size_t length) const;
 
-private:
+  private:
     static const std::size_t DEFAULT_BUFFER_SIZE;
 
     t_buffer buffer_;

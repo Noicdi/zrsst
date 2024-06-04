@@ -7,12 +7,12 @@
 
 class ConfFile
 {
-public:
+  public:
     typedef std::ifstream                                          t_conf_file;
     typedef std::unordered_map<std::string, std::string>           t_conf_file_parameter;
     typedef std::unordered_map<std::string, t_conf_file_parameter> t_conf_file_section;
 
-public:
+  public:
     explicit ConfFile(const std::string& conf_file_path);
 
     ~ConfFile();
@@ -25,7 +25,7 @@ public:
 
     bool getParameterBool(const std::string& section, const std::string& parameter_key, bool parameter_value_default);
 
-private:
+  private:
     void readParameter();
 
     static bool isSection(const std::string& str);
@@ -34,7 +34,7 @@ private:
 
     static void eraseComment(std::string& str);
 
-private:
+  private:
     t_conf_file         conf_file_;
     t_conf_file_section conf_file_section_;
 };

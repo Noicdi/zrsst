@@ -1,9 +1,10 @@
-#include <unordered_map>
+#include "LogManager.h"
 
 #include "Common.h"
 #include "ConfFile.h"
 #include "LogFile.h"
-#include "LogManager.h"
+
+#include <unordered_map>
 
 static constexpr std::size_t    MAX_WRITE_LOG_FILE_WAIT_SECOND = 3;
 static constexpr std::uintmax_t MAX_LOG_BUFFER_SIZE            = 4.0 * 1024;
@@ -82,10 +83,9 @@ void LogManager::run()
     {
         {
             std::unique_lock<std::mutex> lock(log_mutex_);
-            write_log_variable_.wait_for(lock,
-                                         std::chrono::seconds(MAX_WRITE_LOG_FILE_WAIT_SECOND),
-                                         [&]
-                                         { return !write_buffer_vector_.empty() || !current_buffer_.get()->empty(); });
+            write_log_variable_.wait_for(lock, std::chrono::seconds(MAX_WRITE_LOG_FILE_WAIT_SECOND), [&] {
+                return !write_buffer_vector_.empty() || !current_buffer_.get()->empty();
+            });
 
             if (write_buffer_vector_.empty())
             {
@@ -122,11 +122,13 @@ void LogManager::switchCurrentBuffer()
 
 inline LogManager::t_log_level_string LogManager::logLevelToString(const logLevel log_level)
 {
-    static const std::unordered_map<logLevel, t_log_level_string> level_map = {{DEBUG, " DEBUG -- "},
-                                                                               {INFO, " INFO  -- "},
-                                                                               {WARN, " WARN  -- "},
-                                                                               {ERROR, " ERROR -- "},
-                                                                               {FATAL, " FATAL -- "}};
+    static const std::unordered_map<logLevel, t_log_level_string> level_map = {
+        {DEBUG, " DEBUG -- "},
+        {INFO,  " INFO  -- "},
+        {WARN,  " WARN  -- "},
+        {ERROR, " ERROR -- "},
+        {FATAL, " FATAL -- "}
+    };
 
     return level_map.find(log_level)->second;
 }
@@ -134,7 +136,12 @@ inline LogManager::t_log_level_string LogManager::logLevelToString(const logLeve
 inline LogManager::logLevel LogManager::stringToLogLevel(const t_log_level_string& log_level)
 {
     static const std::unordered_map<t_log_level_string, logLevel> level_map = {
-        {"debug", DEBUG}, {"info", INFO}, {"warn", WARN}, {"error", ERROR}, {"fatal", FATAL}};
+        {"debug", DEBUG},
+        {"info",  INFO },
+        {"warn",  WARN },
+        {"error", ERROR},
+        {"fatal", FATAL}
+    };
 
     return level_map.find(log_level)->second;
 }

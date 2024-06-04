@@ -1,46 +1,46 @@
 #ifndef LOG_H
 #define LOG_H
 
-#include <sstream>
-
 #include "LogManager.h"
+
+#include <sstream>
 
 // public log interface
 
-template <typename T, typename... Targs>
+template<typename T, typename... Targs>
 void logDebug(const char* format, T value, Targs... Fargs);
 
 void logDebug(const char* format);
 
-template <typename T, typename... Targs>
+template<typename T, typename... Targs>
 void logInfo(const char* format, T value, Targs... Fargs);
 
 void logInfo(const char* format);
 
-template <typename T, typename... Targs>
+template<typename T, typename... Targs>
 void logWarn(const char* format, T value, Targs... Fargs);
 
 void logWarn(const char* format);
 
-template <typename T, typename... Targs>
+template<typename T, typename... Targs>
 void logError(const char* format, T value, Targs... Fargs);
 
 void logError(const char* format);
 
-template <typename T, typename... Targs>
+template<typename T, typename... Targs>
 void logFatal(const char* format, T value, Targs... Fargs);
 
 void logFatal(const char* format);
 
 // private log function
 
-template <typename T, typename... Targs>
+template<typename T, typename... Targs>
 static void formatToString(std::ostringstream& stream, const char* format, T value, Targs... Fargs);
 
-template <typename T, typename... Targs>
+template<typename T, typename... Targs>
 static void log(LogManager::logLevel level, const char* format, T value, Targs... Fargs);
 
-template <typename T, typename... Targs>
+template<typename T, typename... Targs>
 void logDebug(const char* format, T value, Targs... Fargs)
 {
     if (LogManager::getInstance()->getLogLevel() > LogManager::logLevel::DEBUG)
@@ -61,7 +61,7 @@ inline void logDebug(const char* format)
     LogManager::getInstance()->writeLog(format, LogManager::logLevel::DEBUG);
 }
 
-template <typename T, typename... Targs>
+template<typename T, typename... Targs>
 void logInfo(const char* format, T value, Targs... Fargs)
 {
     if (LogManager::getInstance()->getLogLevel() > LogManager::logLevel::INFO)
@@ -82,7 +82,7 @@ inline void logInfo(const char* format)
     LogManager::getInstance()->writeLog(format, LogManager::logLevel::INFO);
 }
 
-template <typename T, typename... Targs>
+template<typename T, typename... Targs>
 void logWarn(const char* format, T value, Targs... Fargs)
 {
     if (LogManager::getInstance()->getLogLevel() > LogManager::logLevel::WARN)
@@ -103,7 +103,7 @@ inline void logWarn(const char* format)
     LogManager::getInstance()->writeLog(format, LogManager::logLevel::WARN);
 }
 
-template <typename T, typename... Targs>
+template<typename T, typename... Targs>
 void logError(const char* format, T value, Targs... Fargs)
 {
     if (LogManager::getInstance()->getLogLevel() > LogManager::logLevel::ERROR)
@@ -124,7 +124,7 @@ inline void logError(const char* format)
     LogManager::getInstance()->writeLog(format, LogManager::logLevel::ERROR);
 }
 
-template <typename T, typename... Targs>
+template<typename T, typename... Targs>
 void logFatal(const char* format, T value, Targs... Fargs)
 {
     if (LogManager::getInstance()->getLogLevel() > LogManager::logLevel::FATAL)
@@ -153,7 +153,7 @@ static void formatToString(std::ostringstream& stream, const char* format)
     }
 }
 
-template <typename T, typename... Targs>
+template<typename T, typename... Targs>
 static void formatToString(std::ostringstream& stream, const char* format, T value, Targs... Fargs)
 {
     for (; *format != '\0'; ++format)
@@ -169,7 +169,7 @@ static void formatToString(std::ostringstream& stream, const char* format, T val
     }
 }
 
-template <typename T, typename... Targs>
+template<typename T, typename... Targs>
 static void log(LogManager::logLevel level, const char* format, T value, Targs... Fargs)
 {
     std::ostringstream stream;

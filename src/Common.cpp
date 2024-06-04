@@ -1,9 +1,8 @@
+#include "Common.h"
+
 #include <algorithm>
 #include <chrono>
 #include <filesystem>
-
-#include "Common.h"
-
 
 namespace common
 {

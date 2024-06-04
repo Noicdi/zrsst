@@ -1,4 +1,5 @@
 #include "LogFile.h"
+
 #include "ConfFile.h"
 
 static constexpr std::uintmax_t MAX_LOG_FILE_SIZE = 2.0 * 1024 * 1024 * 1024;
@@ -125,6 +126,6 @@ std::string LogFile::getLogFileName(const std::string& log_directory,
                                     const std::size_t  today_log_file_count)
 {
     // ./test_20240401_0.log
-    return log_directory + "/" + common::getCurrentProcessName() + "_" + current_date + "_" +
-           std::to_string(today_log_file_count) + ".log";
+    return log_directory + "/" + common::getCurrentProcessName() + "_" + current_date + "_"
+         + std::to_string(today_log_file_count) + ".log";
 }

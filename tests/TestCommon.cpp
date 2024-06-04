@@ -1,6 +1,6 @@
-#include <iostream>
-
 #include "Common.h"
+
+#include <iostream>
 
 int main()
 {

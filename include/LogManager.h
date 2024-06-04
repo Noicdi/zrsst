@@ -1,17 +1,17 @@
 #ifndef ZRSST_SRC_LOG_MANAGER_H_
 #define ZRSST_SRC_LOG_MANAGER_H_
 
+#include "Buffer.h"
+#include "LogFile.h"
+
 #include <condition_variable>
 #include <mutex>
 #include <thread>
 #include <vector>
 
-#include "Buffer.h"
-#include "LogFile.h"
-
 class LogManager
 {
-public:
+  public:
     typedef std::string                                t_log_level_string;
     typedef Buffer                                     t_log_buffer;
     typedef std::unique_ptr<t_log_buffer>              t_log_buffer_ptr;
@@ -26,7 +26,7 @@ public:
         FATAL
     };
 
-public:
+  public:
     static LogManager* getInstance();
 
     void writeLog(const std::string& log, logLevel log_level = INFO);
@@ -35,7 +35,7 @@ public:
 
     void setLogLevel(logLevel log_level);
 
-private:
+  private:
     explicit LogManager();
 
     ~LogManager();
@@ -56,7 +56,7 @@ private:
 
     static logLevel stringToLogLevel(const t_log_level_string& log_level);
 
-private:
+  private:
     bool                    is_run_;
     logLevel                log_level_;
     t_log_buffer_ptr        current_buffer_;

@@ -1,8 +1,8 @@
-#include <unistd.h>
-#include <thread>
-#include <chrono>
-
 #include "Log.h"
+
+#include <chrono>
+#include <thread>
+#include <unistd.h>
 
 using namespace std::chrono_literals;
 

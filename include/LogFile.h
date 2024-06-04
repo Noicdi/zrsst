@@ -1,22 +1,22 @@
 #ifndef ZRSST_INCLUDE_LOG_FILE_H_
 #define ZRSST_INCLUDE_LOG_FILE_H_
 
+#include "Buffer.h"
+#include "Common.h"
+
 #include <filesystem>
 #include <fstream>
 #include <mutex>
-
-#include "Buffer.h"
-#include "Common.h"
 
 namespace fs = std::filesystem;
 
 class LogFile
 {
-public:
+  public:
     typedef fs::path      t_log_path;
     typedef std::ofstream t_log_file;
 
-public:
+  public:
     static LogFile* getInstance();
 
     static void initInstance();
@@ -25,7 +25,7 @@ public:
 
     bool writeLog(const Buffer& logs);
 
-private:
+  private:
     LogFile();
 
     ~LogFile();
@@ -53,7 +53,7 @@ private:
     static std::string
     getLogFileName(const std::string& log_directory, const std::string& current_date, std::size_t today_log_file_count);
 
-private:
+  private:
     static LogFile*       m_log_file_;
     static std::once_flag once_flag_;
 
