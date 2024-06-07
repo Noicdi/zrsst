@@ -6,6 +6,9 @@
 
 namespace common
 {
+
+static const char* const CURRENT_PROCESS_SYMLINK = "/proc/self/exe";
+
 std::string getCurrentDateTime()
 {
     const auto now    = std::chrono::system_clock::now();
@@ -33,7 +36,7 @@ std::string getCurrentTime()
 
 std::string getCurrentProcessName()
 {
-    static const std::filesystem::path exe_path = std::filesystem::read_symlink("/proc/self/exe");
+    static const std::filesystem::path exe_path = std::filesystem::read_symlink(CURRENT_PROCESS_SYMLINK);
 
     return exe_path.filename().string();
 }

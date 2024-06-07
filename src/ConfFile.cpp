@@ -59,7 +59,11 @@ void ConfFile::readParameter()
             common::stringToLower(parameter_key);
             common::stringToLower(parameter_value);
 
-            section_iter->second.emplace(parameter_key, parameter_value);
+            if (const auto parameter_iter = section_iter->second.find(parameter_key);
+                parameter_iter == section_iter->second.cend())
+            {
+                section_iter->second.emplace(parameter_key, parameter_value);
+            }
         }
     }
 }
